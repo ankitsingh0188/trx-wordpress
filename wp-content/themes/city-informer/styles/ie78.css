@@ -1,0 +1,85 @@
+/*
+This file contains specific styles for IE lt 9
+*/
+
+#header_top {
+	height: 50px;
+	height: expression(document.body.clientHeight<51?"50px":"auto");
+}
+
+#header_top_wrapper {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#header_bottom_wrapper {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#custom-header {
+	height: 1px;
+	height: expression(document.body.clientHeight<1?"1px":"auto");
+}
+
+#main-header h1.site-title {
+	float: left;
+}
+
+#main-header h1.site-title {
+	width: expression(document.body.clientHeight<301?"300px":"auto");
+}
+
+#nav ul li {
+	z-index: 20;
+}
+
+#nav ul li:hover ul {
+	z-index: 15;
+	border: 1px solid #d9d9d9;
+}
+
+.breadcrumbs {
+	position: relative;
+	display: block;
+	float: left;
+	margin-top: 0;
+	margin-left: 0;
+	padding-left: 131px;
+}
+
+.attachment-slider-image {
+	padding: 0;
+	height: 430px;
+}
+
+aside .search-form {
+	margin-left: 10px;
+	width: 285px;
+}
+
+#footer-wrapper {
+	margin-top: 142px;
+}
+
+#custom-header img {
+	position: absolute;
+	left: 0;
+	margin: 0;
+}
+
+#custom-header .site-title,
+#custom-header .site-description {
+	position: relative;
+}
+
+blockquote,
+#nav ul li:hover ul,
+.search_text,
+#content input[type="text"],
+#content input[type="password"],
+#content textarea {
+	behavior: url('<?php echo get_template_directory_uri();?>/js/PIE.htc');
+}

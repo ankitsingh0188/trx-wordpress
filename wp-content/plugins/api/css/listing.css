@@ -1,0 +1,11 @@
+body {
+  background: unset !important;
+}
+
+footer {
+  background: #1a1a1a !important;
+}
+
+.site-main, .site-header, .site-footer {
+	display: none !important;
+}
