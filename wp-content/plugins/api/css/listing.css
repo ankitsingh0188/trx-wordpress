@@ -7,5 +7,5 @@ footer {
 }
 
 .site-main, .site-header, .site-footer {
-	display: none !important;
+  display: none !important;
 }

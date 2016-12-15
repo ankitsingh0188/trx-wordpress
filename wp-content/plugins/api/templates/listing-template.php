@@ -3,41 +3,26 @@
  * @return html format.
  */
 
-use GuzzleHttp\Client;
-
-$check_api_url = get_option('trx_api_url');
-$check_auth_token = get_option('trx_auth_token');
-// Check the request URI.
-$request_url = $_SERVER['REQUEST_URI'];
-$url = explode('/', $request_url);
-$url = array_filter($url);
-if($url[1] == $check_api_url && !empty($url[2])) {
-  $trx = trx_get_details();
-  return $trx;
-}
-
 function trx_get_details() {
   include_once 'vendor/autoload.php';
   $check_api_url = get_option('trx_api_url');
   $check_auth_token = get_option('trx_auth_token');
-
-  if (isset($check_api_url) && !empty($check_api_url)) {
     // Create a guzzle client.
     $client = new GuzzleHttp\Client(['headers' => [
       'Authorization' => 'Bearer ' .$check_auth_token,
       'Content-Type' => 'application/json',
       'Accept' => 'application/json',
     ]]);
+    $request = $client->get("http://devrevolution.trxchange.net/api/v1/jurisdictions/?slug=third-circuit-court-6");
     try {
-      $request = $client->get('http://devrevolution.trxchange.net/api/v1/jurisdictions');
       $response = json_decode($request->getBody()->getContents(),TRUE);
     } catch (Exception $e) {
       status_header(404);
       return get_template_part(404);
       exit();
     }
-    wp_enqueue_style( 'listing-css', plugin_dir_url(__FILE__) .'css/listing.css');
-    wp_enqueue_style( 'style-css', plugin_dir_url(__FILE__) .'css/style.css');
+    wp_enqueue_style( 'listing-css', plugin_dir_url(__FILE__) .'../css/listing.css');
+    wp_enqueue_style( 'style-css', plugin_dir_url(__FILE__) .'../css/style.css');
     wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
     $data = $response[0];
     setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
@@ -47,11 +32,12 @@ function trx_get_details() {
   ?>
 
 <!-- HTML for jurisdiction data -->
-
-<div class="container">
+<div class="site">
+<div class="site-inner">
+<div class="site-content">
 <ul class="breadcrumb">
-  <li><a href="http://revrad.trxchange.net/index.php?route=common/home"><i class="fa fa-home"></i></a></li>
-  <li><?php echo "<a href=\"http://revrad.trxchange.net/index.php?route=listing/profile&listing_id=$id\">$court_name</a>";
+<!--   <li><a href="http://revrad.trxchange.net/index.php?route=common/home"><i class="fa fa-home"></i></a></li> -->
+  <li><?php echo "<a href='http://revrad.trxchange.net/index.php?route=listing/profile&listing_id=$id' target='_blank'> $court_name</a>";
 ?></li>
 </ul>
 <div class="row">
@@ -84,7 +70,7 @@ function trx_get_details() {
         </tr>
         <tr>
           <td>Website</td>
-          <td><a href="" target="_blank"><?php print $data['website']; ?></a></td>
+          <td><a href="<?php print $data['website']; ?>" target="_blank"><?php print $data['website']; ?></a></td>
         </tr>
         <tr>
           <td>Proceedings Capture Method</td>
@@ -136,7 +122,7 @@ function trx_get_details() {
         </form>
         <hr>
         <h4>Summary</h4>
-        <?php print $data['summary']; ?>
+        <p><?php print $data['description']; ?></p>
         <hr>
         <div class="row">
           <div class="col-sm-7">
@@ -172,6 +158,8 @@ function trx_get_details() {
 </div>
 </div>
 </div>
+</div>
+</div>
 <!-- Footer starts. -->
 <footer>
 <div class="container">
@@ -189,14 +177,7 @@ function trx_get_details() {
 </div>
 </footer>
 <!-- Footer ends. -->
-<?php
-  }
-  elseif (!isset($jurisdiction_id[1]) && empty($jurisdiction_id[1]) && !is_numeric($jurisdiction_id[1])) {
-    status_header(404);
-    get_template_part(404);
-    exit();
-  }
-}
+<?php }
 // Create a shortcode for plugin.
 add_shortcode( 'trx-get-details', 'trx_get_details' );
 ?>
