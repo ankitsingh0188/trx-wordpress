@@ -10,7 +10,7 @@
 use GuzzleHttp\Client;
 
 // File for home page content.
-include 'trx_homepage_api.php';
+include 'trx-homepage-api.php';
 
 // Check whether  session id is set or not.
 if(!session_id()) {

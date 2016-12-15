@@ -1,6 +1,6 @@
 <div class="container">
     <h3>TRX Configuration</h3>
-    <form class="form-horizontal" method="POST" action="<?php print plugin_dir_url(__FILE__).'api-config.php'; ?>">
+    <form class="form-horizontal" method="POST" action="<?php print plugin_dir_url(__FILE__).'trx-api-config.php'; ?>">
     <div class="form-group">
       <label class="control-label col-sm-2" for="TRX Auth Token">TRX Auth Token</label>
       <div class="col-sm-6">
