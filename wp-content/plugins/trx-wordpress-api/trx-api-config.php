@@ -8,6 +8,6 @@ foreach ($_POST as $key => $value) {
 	if(isset($options)) {
 		update_option($key, $value);
 	}
-	$query = add_option( $key, $value, '', 'yes');
+	$query = add_option( $key, $value, 'no');
 }
-header('Location:' . $base_url . '/wp-admin/options-general.php?page=trx-configurations');
+header('Location:' . $_SERVER['HTTP_REFERER']);

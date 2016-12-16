@@ -5,15 +5,14 @@
 
 function trx_get_details() {
   include_once 'vendor/autoload.php';
-  $check_api_url = get_option('trx_api_url');
-  $check_auth_token = get_option('trx_auth_token');
     // Create a guzzle client.
     $client = new GuzzleHttp\Client(['headers' => [
-      'Authorization' => 'Bearer ' .$check_auth_token,
+      'Authorization' => 'Bearer ' .trx_auth_token,
       'Content-Type' => 'application/json',
       'Accept' => 'application/json',
     ]]);
-    $request = $client->get("http://devrevolution.trxchange.net/api/v1/jurisdictions/?slug=third-circuit-court-6");
+    // $request = $client->get("http://devrevolution.trxchange.net/api/v1/jurisdictions/?slug=third-circuit-court-6");
+    $request = $client->get("http://devrevolution.trxchange.net/api/v1/jurisdictions/?slug=marion-county-superior-court-3");
     try {
       $response = json_decode($request->getBody()->getContents(),TRUE);
     } catch (Exception $e) {
@@ -21,14 +20,31 @@ function trx_get_details() {
       return get_template_part(404);
       exit();
     }
+    // Load the jQuery.
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('trx-api-js', plugin_dir_url(__FILE__) .'../js/trx-api.js');
+    // Load the CSS.
     wp_enqueue_style( 'listing-css', plugin_dir_url(__FILE__) .'../css/listing.css');
     wp_enqueue_style( 'style-css', plugin_dir_url(__FILE__) .'../css/style.css');
     wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
     $data = $response[0];
-    setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
-    $_SESSION['postal_code'] = $data['postal_code'];
     $id = $data['id'];
     $court_name = $data['name'];
+    $code = $data['code'];
+    setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+    $_SESSION['postal_code'] = $data['postal_code'];
+    if(preg_match('/marion-county/',$code)) {
+      $form_action = trxcommerce_marioncounty_quote_action;
+      $product_id = trxcommerce_marioncounty_product_id;
+    } 
+    elseif (preg_match('/us-trustee/',$code)) {
+      $form_action = trxcommerce_341meetings_quote_action;
+      $product_id = trxcommerce_341meetings_product_id;
+    }
+    else {
+      $form_action = trxcommerce_default_quote_action;
+      $product_id = trxcommerce_default_product_id;
+    }
   ?>
 
 <!-- HTML for jurisdiction data -->
@@ -96,20 +112,26 @@ function trx_get_details() {
       <div class="col-sm-6">
       <div id="product">
         <hr style="margin-top:-21px;padding:0;">
-        <form action="http://devtrxstorefront.trxchange.net/index.php" method="get">
-          <input name="jurisdiction" value="" type="hidden">
-          <input name="route" value="product/product" type="hidden">
-          <input name="product_id" value="71" type="hidden">
+        <form action="<?php print $form_action; ?>" method="get" id="trx-wp-form">
+          <input name="jurisdiction" value="<?php print $code; ?>" type="hidden">
+          <input name="route" value="<?php print trxcommerce_route; ?>" type="hidden">
+          <input name="product_id" value="<?php print $product_id; ?>" type="hidden">
           <div class="form-group">
             <h4>Presiding Officer</h4>
             <div class="form-group">
               <div class="form-group">
-                <select name="officer" class="form-control" style="min-width:80%">
-                  <?php foreach ($data['officers'] as $key => $value) { ?>
-                  <option value="<?php print $value['name']; ?>" selected="selected"><?php print $value['name']; ?></option>
+                <select name="officer" class="form-control officer_name" style="min-width:80%">
+                <option value="" selected="selected">-- Select --</option>
+                  <?php 
+                  $officer = array();
+                  foreach ($data['officers'] as $key => $value) { 
+                    $officer = $value;
+                    ?>
+                  <option class="officer_order" data-order="<?php print $officer['order_method']; ?>" value="<?php print $officer['code']; ?>"><?php print $officer['name']; ?></option>
                   <?php } ?>
                 </select>
               </div>
+              <p class="officer-default"></p>
               <p>
                 Before submitting a request for a quote, please select the matter's associated Presiding
                 Officer from the list, or type their name in if not found. Leaving blank may delay quote.
@@ -177,7 +199,8 @@ function trx_get_details() {
 </div>
 </footer>
 <!-- Footer ends. -->
-<?php }
+<?php 
+}
 // Create a shortcode for plugin.
 add_shortcode( 'trx-get-details', 'trx_get_details' );
 ?>

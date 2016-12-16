@@ -3,13 +3,12 @@
 function trx_homepage()  {
   // Check whether current page is homepage.
   if(is_front_page()) {
+    wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
     if(isset($_SESSION['postal_code'])) {
       include_once 'vendor/autoload.php';
       wp_enqueue_style( 'home-css', plugin_dir_url(__FILE__) .'css/home.css');
-      wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-      $check_auth_token = get_option('trx_auth_token');
       $client = new GuzzleHttp\Client(['headers' => [
-        'Authorization' => 'Bearer ' .$check_auth_token,
+        'Authorization' => 'Bearer ' .trx_auth_token,
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
       ]]);
