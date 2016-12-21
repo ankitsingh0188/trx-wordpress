@@ -8,16 +8,13 @@
 * @subpackage Twenty_Sixteen
 * @since Twenty Sixteen 1.0
 */
-wp_head();
 ?>
 <!DOCTYPE html>
 <html class="no-js">
   <head>
-    <title>Basic Header</title>
     <link rel="stylesheet" href="/wp-content/themes/twentysixteen/css/header-user-dropdown.css">
     <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
-    <meta name="google-site-verification" content="S0fqGvGlhimDnsR5x0W1c3qOtU_Pb2JNCFnQDUVX_xg" />
-    <?php //wp_head(); ?>
+    <?php wp_head(); ?>
   </head>
   <body <?php body_class();?>>
     <div id="page" class="site">

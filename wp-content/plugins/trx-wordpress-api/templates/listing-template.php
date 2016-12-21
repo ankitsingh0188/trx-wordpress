@@ -2,11 +2,12 @@
 /**
  * @return html format.
  */
-// get_header('trx-header');  
+
 function trx_get_details() {
   include_once 'vendor/autoload.php';
     $url = $_SERVER['REQUEST_URI'];
     $parts = explode('/', $url);
+    $page_title = ucwords(str_replace('-', ' ', $parts[2]));
     // Create a guzzle client.
     $client = new GuzzleHttp\Client(['headers' => [
       'Authorization' => 'Bearer ' .trx_auth_token,
@@ -49,8 +50,9 @@ function trx_get_details() {
       $form_action = trxcommerce_default_quote_action;
       $product_id = trxcommerce_default_product_id;
     } 
-    get_header('trx-header');
     ?>
+    <title><?php print $page_title . ' - ' . get_bloginfo(); ?></title>
+    <?php get_header('trx-header'); ?>
     <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
 

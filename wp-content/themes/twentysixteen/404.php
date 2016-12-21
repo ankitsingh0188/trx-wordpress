@@ -9,7 +9,10 @@
 
 add_rewrite_rule('listings/[^/]*', 'index.php?pagename=listings-court', 'top');
 $listings_page = get_query_var('pagename');
-  if ($listings_page == 'listings-court') { }
+  if ($listings_page == 'listings-court') {
+    include WP_CONTENT_DIR . '/plugins/trx-wordpress-api/templates/listing-template.php';
+    $trx = trx_get_details();
+  }
   else{
 get_header(); ?>
 
