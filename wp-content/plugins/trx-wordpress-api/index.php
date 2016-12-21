@@ -10,8 +10,16 @@
 define('trx_auth_token', get_option('trx_auth_token'));
 // TRX API URL.
 define('trx_api_url', get_option('trx_api_url'));
+// TRX API Prefix.
+define('trx_api_prefix', get_option('trx_api_prefix'));
+// TRX Jurisdiction URL.
+define('trx_jurisdiction_url', get_option('trx_jurisdiction_url'));
 // TRX Route.
 define('trxcommerce_route', get_option('trxcommerce_route'));
+// Blog page id.
+define('blog_page_id', get_option('blog_page_id'));
+// Home page id.
+define('home_page_id', get_option('home_page_id'));
 
 // Marion County Quote Action.
 define('trxcommerce_marioncounty_quote_action', get_option('trxcommerce_marioncounty_quote_action'));
@@ -28,16 +36,17 @@ define('trxcommerce_default_quote_action', get_option('trxcommerce_default_quote
 // Default Product Id.
 define('trxcommerce_default_product_id', get_option('trxcommerce_default_product_id'));
 
-// Use Guzzle Http Client for API.
-use GuzzleHttp\Client;
-
-// File for home page content.
-include 'trx-homepage-api.php';
-
 // Check whether  session id is set or not.
 if(!session_id()) {
   session_start();
 }
+// Use Guzzle Http Client for API.
+use GuzzleHttp\Client;
+
+// File for home page content.
+include 'templates/blog-template.php';
+include 'trx-homepage-api.php';
+
 
 // Function will call when you activate the plugin.
 function trx_api_activate() {
