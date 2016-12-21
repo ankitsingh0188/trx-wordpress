@@ -8,12 +8,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-3" for="Trx Api Url">TRX Api Url</label>
-      <div class="col-sm-6">
-        <input type="text" class="form-control" id="trx_api_url" name="trx_api_url" placeholder="Trx Api Url" value="<?php print trx_api_url; ?>">
-      </div>
-    </div>
-    <div class="form-group">
       <label class="control-label col-sm-3" for="Route">TRX Commerce Route</label>
       <div class="col-sm-6">
         <input type="text" class="form-control" id="trxcommerce_route" name="trxcommerce_route" placeholder="Route" value="<?php print trxcommerce_route; ?>">
@@ -54,6 +48,30 @@
       <div class="col-sm-6">
         <input type="text" class="form-control" id="trxcommerce_default_quote_action" name="trxcommerce_default_quote_action" placeholder="Default Quote Action" value="<?php print trxcommerce_default_quote_action; ?>">
       </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="TRX API URL">TRX API URL</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="trx_api_url" name="trx_api_url" placeholder="TRX API URL" value="<?php print trx_api_url; ?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="TRX API Prefix">TRX API Prefix</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="trx_api_prefix" name="trx_api_prefix" placeholder="TRX API Prefix" value="<?php print trx_api_prefix; ?>">
+      </div>
+    </div>
+     <!-- <div class="form-group">
+      <label class="control-label col-sm-3" for="Home Page Id">Home Page Id</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="home_page_id" name="home_page_id" placeholder="Home Page Id" value="<?php //print home_page_id; ?>">
+      </div>
+    </div>
+     <div class="form-group">
+      <label class="control-label col-sm-3" for="Blog Page Id">Blog Page Id</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="blog_page_id" name="blog_page_id" placeholder="Blog Page Id" value="<?php //print blog_page_id; ?>">
+      </div> -->
     </div>
     <div class="form-group">
       <div class="col-sm-offset-3 col-sm-10">
