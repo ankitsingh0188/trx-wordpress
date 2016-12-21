@@ -6,10 +6,11 @@
  * @subpackage Twenty_Sixteen
  * @since Twenty Sixteen 1.0
  */
- add_rewrite_rule('listings/[^/]*', 'index.php?pagename=listings-court', 'top');
- $listings_page = get_query_var('pagename');
-  if ($listings_page == 'listings-court'){}
-    else{
+
+add_rewrite_rule('listings/[^/]*', 'index.php?pagename=listings-court', 'top');
+$listings_page = get_query_var('pagename');
+  if ($listings_page == 'listings-court') { }
+  else{
 get_header(); ?>
 
   <div id="primary" class="content-area">
