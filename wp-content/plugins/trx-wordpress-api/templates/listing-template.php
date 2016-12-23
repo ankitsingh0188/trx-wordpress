@@ -8,55 +8,52 @@ function trx_get_details() {
     $url = $_SERVER['REQUEST_URI'];
     $parts = explode('/', $url);
     $page_title = ucwords(str_replace('-', ' ', $parts[2]));
-    // Create a guzzle client.
-    $client = new GuzzleHttp\Client(['headers' => [
-      'Authorization' => 'Bearer ' .trx_auth_token,
-      'Content-Type' => 'application/json',
-      'Accept' => 'application/json',
-    ]]);
-
-    $request = $client->get(trx_api_url . '' . trx_api_prefix . 'jurisdictions/?slug=' . $parts[2]);
     try {
-      $response = json_decode($request->getBody()->getContents(),TRUE);
-    } catch (Exception $e) {
-      status_header(404);
-      return get_template_part(404);
-      exit();
-    }
-    // Load the jQuery.
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('trx-api-js', plugin_dir_url(__FILE__) .'../js/trx-api.js');
-    // Load the CSS.
-    wp_enqueue_style( 'listing-css', plugin_dir_url(__FILE__) .'../css/listing.css');
-    wp_enqueue_style( 'style-css', plugin_dir_url(__FILE__) .'../css/style.css');
-    wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-    $data = $response[0];
-    $id = $data['id'];
-    $court_name = $data['name'];
-    $code = $data['code'];
-    setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
-    $_SESSION['postal_code'] = $data['postal_code'];
-    $_SESSION['city'] = $data['city'];
-    $_SESSION['country_id'] = $data['country_id'];
-    if(preg_match('/marion-county/',$code)) {
-      $form_action = trxcommerce_marioncounty_quote_action;
-      $product_id = trxcommerce_marioncounty_product_id;
-    } 
-    elseif (preg_match('/us-trustee/',$code)) {
-      $form_action = trxcommerce_341meetings_quote_action;
-      $product_id = trxcommerce_341meetings_product_id;
-    }
-    else {
-      $form_action = trxcommerce_default_quote_action;
-      $product_id = trxcommerce_default_product_id;
-    } 
+      // Create a guzzle client.
+      $client = new GuzzleHttp\Client(['headers' => [
+        'Authorization' => 'Bearer ' .trx_auth_token,
+        'Content-Type' => 'application/json',
+        'Accept' => 'application/json',
+      ]]);
+
+      $request = $client->get(trx_api_url . '' . trx_api_prefix . 'jurisdictions/?slug=' . $parts[2]);
+      
+        $response = json_decode($request->getBody()->getContents(),TRUE);
+      // Load the jQuery.
+      wp_enqueue_script('jquery');
+      wp_enqueue_script('trx-api-js', plugin_dir_url(__FILE__) .'../js/trx-api.js');
+      // Load the CSS.
+      wp_enqueue_style( 'listing-css', plugin_dir_url(__FILE__) .'../css/listing.css');
+      wp_enqueue_style( 'style-css', plugin_dir_url(__FILE__) .'../css/style.css');
+      wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+        $data = $response[0];
+      if(empty($data)) {
+        wp_redirect('/404');
+      }
+      $id = $data['id'];
+      $court_name = $data['name'];
+      $code = $data['code'];
+      setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+      $_SESSION['postal_code'] = $data['postal_code'];
+      $_SESSION['city'] = $data['city'];
+      $_SESSION['country_id'] = $data['country_id'];
+      if(preg_match('/marion-county/',$code)) {
+        $form_action = trxcommerce_marioncounty_quote_action;
+        $product_id = trxcommerce_marioncounty_product_id;
+      } 
+      elseif (preg_match('/us-trustee/',$code)) {
+        $form_action = trxcommerce_341meetings_quote_action;
+        $product_id = trxcommerce_341meetings_product_id;
+      }
+      else {
+        $form_action = trxcommerce_default_quote_action;
+        $product_id = trxcommerce_default_product_id;
+      } 
     ?>
     <title><?php print $page_title . ' - ' . get_bloginfo(); ?></title>
     <?php get_header('trx-header'); ?>
-    <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-
-      <section class="error-404 not-found">
+      <section>
         <div class="page-content">
           <ul class="breadcrumb">
           <!--   <li><a href="http://revrad.trxchange.net/index.php?route=common/home"><i class="fa fa-home"></i></a></li> -->
@@ -187,13 +184,15 @@ function trx_get_details() {
             </div>
         </div><!-- .page-content -->
       </section><!-- .error-404 -->
-
     </main><!-- .site-main -->
-
-  </div><!-- .content-area -->
 <?php 
-   get_footer('trx-footer'); 
- }
+  } 
+  catch (Exception $e) {
+    $msg = $e->getMessage();
+    wp_redirect('/404?err_msg=' . $msg);
+  }
+  get_footer('trx-footer'); 
+}
 // Create a shortcode for plugin.
 add_shortcode( 'trx-get-details', 'trx_get_details' );
 ?>

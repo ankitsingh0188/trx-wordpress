@@ -25,7 +25,11 @@ get_header(); ?>
         </header><!-- .page-header -->
 
         <div class="page-content">
-          <p><?php _e( 'It looks like nothing was found at this location. Maybe try a search?', 'twentysixteen' ); ?></p>
+          <p><?php if(isset($_GET['err_msg'])) {
+            _e($_GET['err_msg']);
+          }
+          else {
+          _e( 'It looks like nothing was found at this location. Maybe try a search?', 'twentysixteen' ); } ?></p>
 
           <?php get_search_form(); ?>
         </div><!-- .page-content -->

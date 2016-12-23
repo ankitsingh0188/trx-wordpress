@@ -16,7 +16,7 @@
     <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
     <?php wp_head(); ?>
   </head>
-  <body <?php body_class();?>>
+  <body <?php if(!is_404()){ body_class(); }?>>
     <div id="page" class="site">
       <header class="header-user-dropdown">
         <div class="header-limiter">
