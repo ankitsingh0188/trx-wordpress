@@ -34,7 +34,7 @@ function trx_homepage()  {
       if($frontpage_id) {     
         $html_columns = '';
         foreach ($response as $thumb) {
-          $html_columns .= '<div class="col-sm-4"><div class="panel panel-default"><img src="https://placeholdit.imgix.net/~text?txtsize=42&bg=ededed&txt=450%C3%97300&w=450&h=300" alt="test-img"><div class="panel-body text-center"><h3>' . $thumb['name'] . '</h3><a href="#" class="btn btn-primary" role="button">Order Transcript</a></p></div></div></div>';
+          $html_columns .= '<div class="col-sm-4"><div class="panel panel-default"><img src="https://placeholdit.imgix.net/~text?txtsize=42&bg=ededed&txt=450%C3%97300&w=450&h=300" alt="test-img"><div class="panel-body text-center"><h3>' . $thumb['name'] . '</h3><a href="listings/'. $thumb['code'] . '" class="btn btn-primary" role="button">Order Transcript</a></p></div></div></div>';
         }
         $new_post = array(
           'post_content'=> '<h4>We see you are searching in: ' . $_SESSION['city'] . ', ' . $_SESSION['country_id'] . '</h4>[trx_algolia_search]<div class="row">' . $html_columns . '</div>',
@@ -60,7 +60,7 @@ function trx_homepage()  {
         }
         $html_columns = '';
         foreach ($response as $thumb) {
-          $html_columns .= '<div class="col-sm-4"><div class="panel panel-default"><img src="https://placeholdit.imgix.net/~text?txtsize=42&bg=ededed&txt=450%C3%97300&w=450&h=300" alt="test-img"><div class="panel-body text-center"><h3>' . $thumb['name'] . '</h3><a href="#" class="btn btn-primary" role="button">Order Transcript</a></p></div></div></div>';
+          $html_columns .= '<div class="col-sm-4"><div class="panel panel-default"><img src="https://placeholdit.imgix.net/~text?txtsize=42&bg=ededed&txt=450%C3%97300&w=450&h=300" alt="test-img"><div class="panel-body text-center"><h3>' . $thumb['name'] . '</h3><a href="listings/'. $thumb['code'] . '" class="btn btn-primary" role="button">Order Transcript</a></p></div></div></div>';
         }
         $new_post = array(
           'post_content'=> '[trx_algolia_search]<div class="row">' . $html_columns . '</div>',
