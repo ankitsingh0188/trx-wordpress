@@ -5,7 +5,6 @@ function trx_homepage()  {
   $frontpage_id = get_option('page_on_front');
   if(is_front_page()) {
     $id = get_pages();
-
     include_once 'vendor/autoload.php';
     wp_enqueue_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
     wp_enqueue_style( 'home-css', plugin_dir_url(__FILE__) .'css/home.css');
