@@ -41,14 +41,14 @@ function trx_get_details() {
         $form_action = trxcommerce_marioncounty_quote_action;
         $product_id = trxcommerce_marioncounty_product_id;
       } 
-      elseif (preg_match('/us-trustee/',$code)) {
+      elseif (preg_match('/341-meetings/',$code)) {
         $form_action = trxcommerce_341meetings_quote_action;
         $product_id = trxcommerce_341meetings_product_id;
       }
       else {
         $form_action = trxcommerce_default_quote_action;
         $product_id = trxcommerce_default_product_id;
-      } 
+      }
     ?>
     <title><?php print $page_title . ' - ' . get_bloginfo(); ?></title>
     <?php get_header('trx-header'); ?>
@@ -66,7 +66,7 @@ function trx_get_details() {
             <h1><?php print $data['name']; ?></h1>
             <div class="row">
               <div class="col-sm-6">
-                <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=500%C3%97250&w=500&h=250">
+                <img src="<?php if(isset($data['image'])){ print $data['image']; } else { print "https://placeholdit.imgix.net/~text?txtsize=38&txt=500%C3%97250&w=500&h=250";} ?>">
                 <h4>Details</h4>
                 <table class="table">
                   <tbody><tr>
@@ -83,7 +83,7 @@ function trx_get_details() {
                   </tr>
                   <tr>
                     <td>State</td>
-                    <td><?php print $data['state']; ?></td>
+                    <td><?php print $data['zone_id']; ?></td>
                   </tr>
                   <tr>
                     <td>Postal Code</td>
@@ -95,12 +95,11 @@ function trx_get_details() {
                   </tr>
                   <tr>
                     <td>Proceedings Capture Method</td>
-                    <td>
-                    </td>
+                    <td><?php print $data['capture_description']; ?></td>
                   </tr>
                   <tr>
                     <td>Pricing</td>
-                    <td></td>
+                    <td><?php print $data['pricing_description']; ?></td>
                   </tr>
                 </tbody></table>
                 <h4>Presiding Officers</h4>
