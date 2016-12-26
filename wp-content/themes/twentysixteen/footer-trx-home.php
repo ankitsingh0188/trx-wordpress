@@ -14,6 +14,9 @@
 <footer>
   <div class="container">
     <div class="row">
+      <div class=col-sm-6>
+        <?php echo do_shortcode('[contact-form-7 id="673" title="Contact form 1"]'); ?>
+      </div>
       <div class="col-sm-4">
         <h5>Information</h5>
         <ul class="list-unstyled">
