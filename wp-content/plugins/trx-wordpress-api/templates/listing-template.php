@@ -41,7 +41,7 @@ function trx_get_details() {
         $form_action = trxcommerce_marioncounty_quote_action;
         $product_id = trxcommerce_marioncounty_product_id;
       } 
-      elseif (preg_match('/341-meetings/',$code)) {
+      elseif (preg_match('/341-meetings/',$code) || preg_match('/341-hearing/',$code) || preg_match('/trustee-hearing/',$code) || preg_match('/us-trustee-hearing/',$code) || preg_match('/bankruptcy-hearing/',$code)) {
         $form_action = trxcommerce_341meetings_quote_action;
         $product_id = trxcommerce_341meetings_product_id;
       }
