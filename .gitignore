@@ -1,5 +1,7 @@
 # Ignore paths that contain user-generated content.
 /vendor
 /wp-content/uploads/*
-/wp-config.php
+/wp-content/cache/*
+/wp-content/w3tc-config/*
+/wp-content/advanced-cache.php
 .phpintel/
