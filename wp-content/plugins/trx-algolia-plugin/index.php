@@ -13,7 +13,7 @@ function trx_algolia_search() {
   wp_enqueue_script('trx-algolia3-js', 'http://devrevolution.trxchange.net/js/trx-algoliasearch.jquery.min.js');
   wp_enqueue_script('trx-algolia4-js', plugin_dir_url(__FILE__) .'js/search-init.js');
 ?>
-  <div class="row"><form class="form-horizontal" method="POST" accept-charset="UTF-8"  id="search-form"><div class="form-group"><div class="col-sm-6"><input placeholder="Algolia Search" type="text" class="form-control enable-algoliasearch"></div></div><div  id="search-suggestions"></div></form></div>
+  <div class="row"><form class="form-horizontal" method="POST" accept-charset="UTF-8"  id="search-form"><div class="form-group"><div class="col-sm-6"><input placeholder="What are you looking for..." type="text" class="form-control enable-algoliasearch"></div></div><div  id="search-suggestions"></div></form></div>
 
 <?php
 }
