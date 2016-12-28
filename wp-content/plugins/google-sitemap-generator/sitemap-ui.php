@@ -122,7 +122,7 @@ class GoogleSitemapGeneratorUI {
       'Content-Type' => 'application/json',
       'Accept' => 'application/json',
     ]]);
-    $request = $client->get(trx_api_url . '' . trx_api_prefix . 'jurisdictions');
+    $request = $client->get(trx_api_url . '' . trx_api_prefix . 'jurisdictions?limit=9999');
     $response = json_decode($request->getBody()->getContents(),TRUE);
     $page_uri = get_site_url();
     $date = strtotime("now");
