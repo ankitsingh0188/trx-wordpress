@@ -33,6 +33,9 @@ function trx_get_details() {
       $id = $data['id'];
       $court_name = $data['name'];
       $code = $data['code'];
+      if(empty($data['image'])) {
+        $data['image'] = plugin_dir_url(_FILE_) . 'trx-wordpress-api/images/default_listing_bg.png';
+      }
       setcookie( 'postal_code', $data['postal_code'], 30 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
       $_SESSION['postal_code'] = $data['postal_code'];
       $_SESSION['city'] = $data['city'];
@@ -66,7 +69,7 @@ function trx_get_details() {
             <h1><?php print $data['name']; ?></h1>
             <div class="row">
               <div class="col-sm-6">
-                <img src="<?php if(isset($data['image'])){ print $data['image']; } else { print "https://placeholdit.imgix.net/~text?txtsize=38&txt=500%C3%97250&w=500&h=250";} ?>">
+                <img src="<?php print $data['image']; ?>">
                 <h4>Details</h4>
                 <table class="table">
                   <tbody><tr>
@@ -121,6 +124,8 @@ function trx_get_details() {
                     <input name="route" value="<?php print trxcommerce_route; ?>" type="hidden">
                     <input name="product_id" value="<?php print $product_id; ?>" type="hidden">
                     <div class="form-group">
+                    <?php 
+                      if($form_action != "https://341meetings.trxchange.net/index.php") { ?>
                       <h4>Presiding Officer</h4>
                       <div class="form-group">
                         <div class="form-group">
@@ -140,6 +145,7 @@ function trx_get_details() {
                           Before submitting a request for a quote, please select the matter's associated Presiding
                           Officer from the list, or type their name in if not found. Leaving blank may delay quote.
                         </p>
+                        <?php } ?>
                         <div class="form-group text-center">
                           <button type="submit" id="button-cart" class="btn btn-primary btn-lg get-quote">GET A QUOTE</button>
                         </div>
